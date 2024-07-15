@@ -1,0 +1,29 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <p>For some reason we were unable to capture your MTurk ID, please enter it below so that we can make sure that you are compensated properly:</p>
+        <form action="#">
+            <input type="text" id="mturk_id" name="mturk_id" placeholder="MTurk ID">
+            <br>
+            <input class="form-next" type="submit" value="Next" onclick="checkFormValidity(event, 'mturk-id')">
+        </form>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

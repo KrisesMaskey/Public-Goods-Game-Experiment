@@ -1,0 +1,139 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+<style>
+    table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            color: #000;
+        }
+    th, td {
+        border-bottom: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        border-bottom: 0px;
+        text-align: center;
+    }   
+</style>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div class="game-interface">
+            <div class="left-column" style="width: 100%;">
+                <div class="top" style="display: flex; flex-direction: column; align-items: center; justify-content: center; background-color: #02006c; padding: 10px;">
+                    <span style="color: goldenrod; font-weight: bold; font-size: 18px;">Stage 2: Please, take a look at the individual contributions in Stage 1.</span>
+                    <div class="linebreak"></div>
+
+                    <span style="color: goldenrod; font-weight: bold; font-size: 18px;">You must decide whether or not to reward each of the three other participants.</span>
+                    <ul style="margin-top: 0.5rem;">
+                        <li style="color: white;">If you "<strong>Reward</strong>", you lose 4 MUs, and the other participant gains 12 MUs.</li>
+                        <li style="color: white;">If you "<strong>Do Nothing</strong>," you do not lose/gain anything, nor does the other participant.</li>
+                    </ul>
+                </div>
+
+                <div class="question">
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>Reward</th>
+                            <th>Do Nothing</th>
+                        </tr>
+                        <tr>
+                            <td class="icon">
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/human-orange.png' %}"/>
+                                    <span class="table-letter-label">A</span>
+                                </div>
+                            </td>
+                            <td class="contribution">has contributed: <strong>{{ player_contribution }} MUs [YOU]</strong></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="icon">
+                                {% if p2_role == 'human' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                                    <span class="table-letter-label">B</span>
+                                </div>
+                                {% elif p2_role == 'bot' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                                    <span class="table-letter-label" style="top:45%;">B</span>
+                                </div>
+                                {% endif %}
+                            </td>
+                            <td class="contribution">has contributed: <strong>{{ contribution.0 }} MUs</strong></td>
+                            <td style="text-align: center;"><input type="radio" name="participantB" value="reward" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                            <td style="text-align: center;"><input type="radio" name="participantB" value="do_nothing" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                        </tr>
+                        <tr>
+                            <td class="icon">
+                                {% if p3_role == 'human' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                                    <span class="table-letter-label">C</span>
+                                </div>
+                                {% elif p3_role == 'bot' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                                    <span class="table-letter-label" style="top:45%;">C</span>
+                                </div>
+                                {% endif %}
+                            </td>
+                            <td class="contribution">has contributed: <strong>{{ contribution.1 }} MUs</strong></td>
+                            <td style="text-align: center;"><input type="radio" name="participantC" value="reward" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                            <td style="text-align: center;"><input type="radio" name="participantC" value="do_nothing" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                        </tr>
+                        <tr>
+                            <td class="icon">
+                                {% if p4_role == 'human' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                                    <span class="table-letter-label">D</span>
+                                </div>
+                                {% elif p4_role == 'bot' %}
+                                <div class="table-role">
+                                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                                    <span class="table-letter-label" style="top:45%;">D</span>
+                                </div>
+                                {% endif %}
+                            </td>
+                            <td class="contribution">has contributed: <strong>{{ contribution.2 }} MUs</strong></td>
+                            <td style="text-align: center;"><input type="radio" name="participantD" value="reward" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                            <td style="text-align: center;"><input type="radio" name="participantD" value="do_nothing" onchange="checkFormValidity(null, 'game-interface', false, {'checked': 3})"></td>
+                        </tr>
+                    </table>
+
+                    <div class="second-stage-timer">
+                        <span style="margin-bottom: 0.2rem; font-size: 16px; font-weight: bolder;">Time remaining</span>
+                        <span class="otree-timer__time-left" style="font-size: 25px; color: red;">00:20</span>
+                    </div>
+
+                    <div class="reward-button-div">
+                        <button id="next-button" class="form-next" style="width: 200px;" onclick="checkFormValidity(event, 'game-interface', true, {'checked': 3})" disabled>Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

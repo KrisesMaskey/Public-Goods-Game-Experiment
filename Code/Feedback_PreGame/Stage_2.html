@@ -1,0 +1,33 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <p>In Stage 2, every participant in your group, including you, will see the individual contributions made by everyone
+        else in Stage 1, <strong>and no action is required, except observing the individual contributions</strong>. Then you will see
+        your earnings from the round, which will be added to your personal account.</p>
+
+    <div class="linebreak"></div>
+    <div class="image-viewer">
+        <img id="image" src="{% static 'global/imgs/Feedback/stage_2_example.PNG' %}" alt="Image">
+    </div>
+
+    <button class="form-next">Next</button>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}
+

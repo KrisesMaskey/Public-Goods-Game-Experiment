@@ -1,0 +1,132 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Assuming `group_contribution` is a variable in your script
+    const group_contribution = parseFloat(js_vars.group_contribution); // Adjust as needed
+    const maxContribution = 108.0;
+
+    // Calculate the height percentage
+    const heightPercentage = (group_contribution / maxContribution) * 85;
+
+    // Update the height of the fill element
+    const fillElement = document.querySelector('.fill');
+    fillElement.style.height = heightPercentage + '%';
+});
+
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+       <div class="game-interface">
+        <div class="left-column">
+            <div class="contribution-div" style="top:0;">
+                <p style="color: #000;">From your allowance you kept: <span style="color: red;">{{remaining_balance}} MUs</span></p>
+                <p style="color: #000;">From the public fund you got: <span style="color: red;">{{split}} MUs</span></p>
+            </div>
+            <div class="balance-div">
+                <span id="personal-account">Personal Account</span>
+                <span>{{ current_balance }}</span>
+                <span style="margin: 0 0 2rem 0;">MUs</span>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="role-div" style="margin: 0.5rem 4rem 0 4rem;">
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/human-orange.png' %}"/>
+                    <span class="letter-label">A</span>
+                    <span style="font-size: 20px; color: #000;">You</span>
+                </div>
+                
+                {% if p2_role == 'human' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                    <span class="letter-label">B</span>
+                    <span style="font-size: 20px; color: #000;">Person</span>
+                </div>
+                {% elif p2_role == 'bot' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                    <span class="letter-label" style="top:40%;">B</span>
+                    <span style="font-size: 20px; color: #000;">Bot</span>
+                </div>
+                {% endif %}
+    
+                {% if p3_role == 'human' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                    <span class="letter-label">C</span>
+                    <span style="font-size: 20px; color: #000;">Person</span>
+                </div>
+                {% elif p3_role == 'bot' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                    <span class="letter-label" style="top:40%;">C</span>
+                    <span style="font-size: 20px; color: #000;">Bot</span>
+                </div>
+                {% endif %}
+    
+                {% if p4_role == 'human' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                    <span class="letter-label">D</span>
+                    <span style="font-size: 20px; color: #000;">Person</span>
+                </div>
+                {% elif p4_role == 'bot' %}
+                <div class="role">
+                    <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                    <span class="letter-label" style="top:40%;">D</span>
+                    <span style="font-size: 20px; color: #000;">Bot</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="arrows">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 107">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="green"/>
+                        </marker>
+                    </defs>
+                    <path d="M 215,105 C 150,10 80,80 80,20" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    <path d="M 240,105 C 230,10 190,60 190,20" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    <path d="M 265,105 C 280,10 310,60 310,20" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    <path d="M 285,105 C 350,10 425,80 425,20" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                </svg>
+            </div>
+
+            <div class="jar-div">
+                <img src="{% static 'global/imgs/Baseline/jar.PNG' %}" class="jar-image"/>
+                <div class="fill"></div>
+                <span class="grp-contribution">{{ group_contribution }}</span>
+                <span class="grp-contribution" style="top: 50%">MUs</span>
+                <div class="timer">
+                    <span style="margin-bottom: 0.2rem; font-size: 16px;">Next Round</span>
+                    <span class="otree-timer__time-left" style="font-size: 25px; color: red;">00:15</span>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

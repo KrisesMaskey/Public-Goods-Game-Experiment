@@ -1,0 +1,84 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    // JavaScript to enable the button when scrolled to the bottom
+    var contentDiv = document.getElementById("content");
+    var acceptButton = document.getElementById("accept-button");
+
+    contentDiv.addEventListener("scroll", function() {
+        if (contentDiv.scrollHeight - contentDiv.scrollTop - 10 < contentDiv.clientHeight) {
+            acceptButton.disabled = false; // Enable the button
+        } else {
+            acceptButton.disabled = true; // Disable the button
+        }
+    });
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+    }
+    #content{
+        position: relative;
+        max-height: calc(0.72 * 70vh);
+        max-width: 90%;
+        overflow-y: scroll;
+
+        margin: auto;
+    }
+    .highlight {
+        color: red;
+        font-weight: bold;
+    }
+    .estimated-time {
+        font-weight: bold;
+    }
+</style>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div id="content">
+            <p>Welcome to this study in which you will do an activity with three other anonymous participants online in real time. The Principal Investigator in this study is Talal Rahwan, an Associate Professor at New York University Abu Dhabi.</p>
+            <p>Should you choose to participate in this study, you will do the following:</p>
+            <ul>
+                <li>Fill out a brief questionnaire.</li>
+                <li>Read and understand the rules of an activity that you will be participating in <strong>real time</strong> as part of a group.</li>
+                <li>Answer comprehension check questions to test your understanding of the activity’s rules. If you fail twice to correctly answer all questions, you will not be allowed to finish the study, but we will compensate you with $0.20 for your time.</li>
+                <li>Wait for others in your group to join the activity.</li>
+                <li>Participate in the activity, and answer some follow up questions.</li>
+            </ul>
+            <p class="highlight">You can only participate in this study if you are doing it from a computer. The study is not designed for mobile devices, such as phones or tablets. You need to do this study in one sitting as it involves real time interactions in a group.</p>
+            <p>You will receive $2.50 for completing the study, with the opportunity to earn more. You will repeat the same activity a <strong>maximum of 40 rounds</strong> with the same participants. Each participant may be a bot or a person (another MTurk worker), and you will be informed of the total number of bots and the total number of people in the activity before you participate. In a comparable study we recently conducted the average bonus was $3.28. How much you earn depends on your choices and the choices of the other participants in the activity.</p>
+            <p class="estimated-time">The estimated time for the study is approximately 30 minutes. Based on the previous, similar study we conducted this corresponds to $15.84 in average hourly earnings.</p>
+            <p>After answering the comprehension check questions, you will be placed in a waiting room. The activity will start as soon as all other participants have joined the activity, at which point a beep will alert you. If this does not happen within 5 minutes, which you will be able to see on a timer, then you will have the option of either leaving with your show-up payment of $2.50, or choosing to wait longer so that you can complete the study and earn a bonus from the activity. After 10 minutes of waiting you will receive $2.50, in case not all participants in your group have joined the activity.</p>
+            <p>Participation in this study is voluntary and you may leave the study at any point, however, we can only pay you if you complete the study. When participating in this study, we will keep track of your MTurk ID for payment and tracking. Information not containing identifiers may be used in future research or shared with other researchers without your additional consent.</p>
+            <p>We do not anticipate any risks to you directly resulting from your participation in this study. There will also be no benefits to you beyond the money you earn completing the study. However, you will be assisting in the collection of valuable data about human behavior.</p>
+            <p>If you have questions about the study or your participation, you may contact [name] at [email]. For questions about your rights as a research participant, you may contact the IRB and refer to #HRPP-2024-xx, New York University Abu Dhabi, +971 2 628 4313 or <a href="mailto:IRBnyuad@nyu.edu">IRBnyuad@nyu.edu</a>. If you would like to have a copy of this document, please make a screenshot and keep it.</p>
+            <p class="highlight"><i>Important: by clicking the link below you agree to participate in the study. Only click the link if you intend to participate!</i></p>
+            <p><i>You can only participate in the study once. Open ONLY ONE browser window and attempt to duplicate your input in any way, otherwise you will not get paid.</i></p>
+            <p><i>Once you click the link, a new browser window will open. Do not close the payment window as payment cannot be guaranteed.</i></p>
+        </div>
+        
+        <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem;">
+            <button class="form-next" id="accept-button" disabled>Accept and Continue</button>
+        </div>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

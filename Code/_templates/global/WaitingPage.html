@@ -1,0 +1,63 @@
+{{ extends 'otree/WaitPage.html' }}
+
+{% load otree static %}
+
+{{ block title }} 
+Please Wait
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    function startTimer() {
+        let timer = document.getElementById('timer');
+        let seconds = 0;
+        let minutes = 0;
+        const interval = setInterval(() => {
+            seconds++;
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+            }
+            let displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+            let displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+            timer.textContent = 'Time since waiting: ' + displayMinutes + ':' + displaySeconds;
+
+        }, 1000);
+    }
+
+    window.onload = startTimer;
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+<style>
+    div, li{
+        color: #02006c;
+    }
+</style>
+{{ endblock }}
+
+{{ block content }}
+
+    <ul>
+        <li>The activity will start as soon as all other participants have joined your group.</li>
+        <li>A beep will alert you when everyone has arrived, and the activity will start <strong style="color: red">immediately</strong>.</li>
+        <li><strong style="color:red;">Do not leave this page while waiting</strong>, otherwise we will not be able to compensate you.</li>
+        {% if is_baseline %}
+        <li>You can earn a bonus up to $9.24 if you finish the activity.</li>
+        {% else %}
+        <li>At the end of the final round, you exchange the MUs in your personal account for real-world money: 20
+            MUs is worth $0.10. This will be paid as a bonus on top of the show-up fee of $1.50.</li>
+        {% endif %}
+        <li>If your group does not complete in 10 minutes, you will get a completion code and be paid your show-up fee of $1.50.</li>
+    </ul>
+    <div id="timer" style="display:flex; align-items:center; justify-content:center; margin:2rem 0;">Time since waiting: 00:00</div>
+
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

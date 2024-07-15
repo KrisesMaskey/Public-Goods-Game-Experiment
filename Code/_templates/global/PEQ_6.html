@@ -1,0 +1,53 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <form id="survey-form">
+        <div class="question" id="strange-or-surprising">
+            <div>Was there anything strange or surprising about the study?</div>
+            <div>
+                <textarea id="surprising" name="surprising" rows="4" cols="50" placeholder="Text" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"></textarea>
+            </div>
+        </div>
+
+        <div class="question" id="overall-experience">
+            <div>How would you rate your overall experience completing this study?</div>
+            <div>
+                <input type="radio" id="extremely-positive" name="experience" value="extremely-positive" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="extremely-positive">Extremely positive</label><br>
+                <input type="radio" id="positive" name="experience" value="positive" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="positive">Positive</label><br>
+                <input type="radio" id="slightly-positive" name="experience" value="slightly-positive" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="slightly-positive">Slightly positive</label><br>
+                <input type="radio" id="neutral" name="experience" value="neutral" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="neutral">Neutral</label><br>
+                <input type="radio" id="slightly-negative" name="experience" value="slightly-negative" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="slightly-negative">Slightly negative</label><br>
+                <input type="radio" id="negative" name="experience" value="negative" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="negative">Negative</label><br>
+                <input type="radio" id="extremely-negative" name="experience" value="extremely-negative" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'text-area': 1, 'checked': 1})"> 
+                <label for="extremely-negative">Extremely negative</label>
+            </div>
+        </div>
+
+        <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+        <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(event, 'post-experiment-questions', true, {'text-area': 1, 'checked': 1})" disabled>Next</button>
+    </form>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

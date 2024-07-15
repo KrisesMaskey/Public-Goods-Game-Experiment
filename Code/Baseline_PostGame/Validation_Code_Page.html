@@ -1,0 +1,53 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    {% if leave_flag == True %}
+        <p><strong>Thank you for your participation!</strong></p>
+        <p>Show-up fee is: <span style="color: red;">$1.5</span></p>
+        <p>Your validation code is: <span style="color: red;">{{ validation_code }}</span></p>
+    {% else %}
+        {% if timeout_flag == True %}
+            <p><strong>Thank you for your participation!</strong></p>
+            <p>Unfortunately, you <b>failed to submit your decision</b> within the <b>time limit</b>, and thus you won’t be able 
+                to participate in the activity.</p>
+        
+        {% elif group_left_flag == True %}
+            <p><strong>Thank you for your participation!</strong></p>
+            <p>Unfortunately, you cannot continue the study. Here is what you have earned so far, that you will be compensated for.</p>
+            <p>Monetary value of 20 MUs: <span style="color: red;">$0.10</span></p>
+            <p>Your monetary earnings based on the decisions you first made: ({{ additional_question_MU }}/20) MUs x $0.10 = <span style="color: red;">${{ additional_question_earning }}</span></p>
+            <p>Your monetary earnings in the activity: ({{ personal_account_MU }}/20) MUs x $0.10 = <span style="color: red;">${{ activity_earning }}</span></p>
+            <p>Show-up fee: <span style="color: red;">$1.50</span></p>
+            <p>Your total earnings: <span style="color: red;"><strong>${{ total_earnings }}</strong></span></p>
+            <p>Your validation code is: <span style="color: red;">{{ validation_code }}</span></p>
+            
+        {% else %}
+            <p><strong>Thank you for finishing this study!</strong></p>
+            <p>Monetary value of 20 MUs: <span style="color: red;">$0.10</span></p>
+            <p>Your monetary earnings based on the decisions you first made: ({{ additional_question_MU }}/20) MUs x $0.10 = <span style="color: red;">${{ additional_question_earning }}</span></p>
+            <p>Your monetary earnings in the activity: ({{ personal_account_MU }}/20) MUs x $0.10 = <span style="color: red;">${{ activity_earning }}</span></p>
+            <p>Your monetary earnings from the follow up questions bonus: ({{ personal_account_MU }}/20) MUs x $0.10 = <span style="color: red;">${{ peq_earning }}</span></p>
+            <p>Show-up fee: <span style="color: red;">$1.50</span></p>
+            <p>Your total earnings: <span style="color: red;"><strong>${{ total_earnings }}</strong></span></p>
+            <p>Your validation code is: <span style="color: red;">{{ validation_code }}</span></p>
+        {% endif %}
+    {% endif %}
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

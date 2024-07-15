@@ -1,0 +1,84 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    const r1 = document.getElementById('r1');
+    const r2 = document.getElementById('r2');
+
+    r1.addEventListener('click', (event)=>{
+        r1.classList.add('active'); 
+        checkFormValidity(null, 'post-experiment-questions', false, {'range': 2});
+    });
+
+    r2.addEventListener('click', (event)=>{
+        r2.classList.add('active'); 
+        checkFormValidity(null, 'post-experiment-questions', false, {'range': 2});
+    });
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <form id="survey-form">
+        <div class="question" id="question1">
+            <div>How likely do you think it is that person (not a bot) would reward you if you contributed all of your allowance to
+                the public fund in a round?</div>
+            <div class="slider-container">
+                <input id="r1" type="range" min="0" max="100" step="25"  list="steplist">
+                <div class="tickerDiv">
+                    <datalist id="steplist">
+                        <option value="0" label="0%"></option>
+                        <option value="25" label="25%"></option>
+                        <option value="50" label="50%"></option>
+                        <option value="75" label="75%"></option>
+                        <option value="100" label="100%"></option>
+                    </datalist>
+                </div>
+                <div class="label-div" style="display: flex; width: 50%; justify-content: space-between; margin-top: 1rem;">
+                    <div>[Never]</div>
+                    <div>[Always]</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="question" id="question2">
+            <div>How likely do you think it is that bot (not a person) would reward you if you contributed all of your allowance to
+                the public fund in a round? Please answer even if you did not interact with bots in the activity.</div>
+            <div class="slider-container">
+                <input id="r2" type="range" min="0"  max="100" step="25" list="steplist">
+                <div class="tickerDiv">
+                    <datalist id="steplist">
+                        <option value="0" label="0%"></option>
+                        <option value="25" label="25%"></option>
+                        <option value="50" label="50%"></option>
+                        <option value="75" label="75%"></option>
+                        <option value="100" label="100%"></option>
+                    </datalist>
+                </div>
+                <div class="label-div" style="display: flex; width: 50%; justify-content: space-between; margin-top: 1rem;">
+                    <div>[Never]</div>
+                    <div>[Always]</div>
+                </div>
+            </div>
+        </div>
+        <div class="linebreak"></div>
+
+        <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+        <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(null, 'post-experiment-questions', true, {'range': 2})" disabled>Next</button>
+    </form>
+</div>
+
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

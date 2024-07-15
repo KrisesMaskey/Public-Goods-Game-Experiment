@@ -1,0 +1,35 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script>
+    function decisionHandler(flag){
+        if(flag === true){
+            liveSend({"type": "leave-waitpage", "response": true});
+        }
+        else{
+            liveSend({"type": "leave-waitpage", "response": false});
+        }
+    }
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <p>It's been 5 minutes. Do you want to leave and get the show-up fee or wait for another 5 minutes?</p>
+        <button id="leaveBtn" onclick="decisionHandler(true)">Leave</button>
+        <button class="form-next" onclick="decisionHandler(false)">Wait</button>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

@@ -1,0 +1,183 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script>   
+    let index = 0; // Tab Index
+
+    const images = ["{% static 'global/imgs/Punishment/stage_2_example_1.PNG' %}", "{% static 'global/imgs/Punishment/stage_2_example_2.PNG' %}"];
+    let currentIndex = 0; // Image Viewer Index
+    const imageElement = document.getElementById('image');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const elabel = document.getElementById('example-counter');
+    
+    // Get all the question inputs
+    const questions = document.querySelectorAll('.question input');
+    const quizSubmitBtn = document.getElementById('quizButton');
+    
+    function updateButtons() {
+        prevButton.disabled = currentIndex === 0;
+    }
+
+    function showPrevImage(event) {
+        event.preventDefault();  
+        if (currentIndex > 0) {
+            currentIndex--;
+            elabel.textContent = `Example ${currentIndex + 1}.`;
+            imageElement.src = images[currentIndex];
+            updateButtons();
+        }
+    }
+
+    function showNextImage(event) {
+        event.preventDefault();        
+        if (currentIndex === images.length - 1) {
+            currentIndex = -1
+        }
+        currentIndex++;
+        elabel.textContent = `Example ${currentIndex + 1}.`;
+        imageElement.src = images[currentIndex];
+        updateButtons();
+    }updateButtons(); // Update Image Viewer Buttons
+
+    function enableButton() {
+        const button = document.getElementById('delayedBtn');
+        button.disabled = false;
+        button.classList.add('enabled');
+    }setTimeout(enableButton, 3000); // Set a timeout to enable the button after 30 seconds (30000 milliseconds)
+</script>
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <ul id="navbar" class="navbar">
+            <li><a href="#tab1">Instructions</a></li>
+            <li><a href="#tab2">Example</a></li>
+            <li><a href="#tab3">Quiz</a></li>
+            <li><a href="#tab4">Failed</a></li>
+        </ul>
+
+        <!-- 1. Instructions -->
+        <div id="tab1" class="tab-content active">
+            <p>At Stage 2 of each round, you will see individual contributions from all participants. You will <b>interact with each of the three other participants individually</b>.</p>
+            <ul>
+                <li>You must decide <b>whether or not to punish each of the three other participants</b>.</li>
+                <li>If you choose to punish any participant then you will <b>lose 4 MUs from your personal account</b>, and <b>the other participant loses 12 MUs in their personal account</b>.</li>
+                <li>You have to make your decision in each round within 40 seconds, i.e., <b>before the timer reaches 0, otherwise, we will not be able to compensate you</b>.</li>
+                <li>Note that <b>all three other participants will be making their decisions</b> towards the group members, including you, at the same time.</li>
+                <li>You are not allowed to punish anyone unless you have at least <b>50 MUs in your personal account</b>.</li>
+                <li><b>None of the participants' personal accounts can go below 0</b>, regardless of the number of punishments received. <b>No participant can lose their show-up fee</b>.</li>
+            </ul>
+            
+            <p>Then you will see your earnings from Stage 1 and Stage 2 of this round, which consist of the following:</p>
+            
+            <span><u>The amounts <b>added</b> to your personal account are:</u></span>
+            <ul>
+                <li>the <b>MUs you kept</b> from your allowance in Stage 1;</li>
+                <li>your <b>share of the public fund</b> in Stage 1;</li>
+            </ul>
+            <span><u>The amounts <b>deducted</b> from your personal account are:</u></span>
+            <ul>
+                <li>any <b>cost</b> you incurred <b>to punish others</b> in Stage 2.</li>
+                <li>any <b>punishment you received</b> in Stage 2.</li>
+            </ul>
+            
+            <div class="linebreak"></div>
+            <button class="form-next" onclick="move(event, 1)">Next</button>
+        </div>
+
+        <!-- 2. Example -->
+        <div id="tab2" class="tab-content">
+            <p><strong>Please, read the following examples for Stage 2 carefully. It is important that you fully understand these  examples
+                since you will be asked questions to test your understanding of the rules.</strong></p>
+            
+            <div class="linebreak"></div>
+            <p id="example-counter">Example 1:</p>
+            <div class="image-viewer">
+                <button class="nav-button left" id="prevButton" onclick="showPrevImage(event)">&#9664;</button>
+                <img id="image" src="{% static 'global/imgs/Punishment/stage_2_example_1.PNG' %}" alt="Image">
+                <button class="nav-button right" id="nextButton" onclick="showNextImage(event)">&#9654;</button>
+            </div>
+            
+            <div class="linebreak"></div>
+            <p><strong style="color: red;">You may proceed to the next page after 30 seconds. Please, take your time to read the examples carefully as a comprehension test will be shown on the next page.</strong></p>
+            <button id="delayedBtn" class="form-next" onclick="move(event, 1)" disabled>Next</button>
+        </div>
+
+        <!-- 3. Quiz -->
+        <div id="tab3" class="tab-content">
+        
+            <p>Please answer the following questions about the rules of Stage 2. If you fail twice to answer all of them correctly, you will not be able to participate in the study. You can review the instructions by clicking on the button at the bottom of the page.</p>
+            <p>Good luck!</p>
+
+            <div class="question" id="question1">
+                <div>Imagine that every participant has 100 MUs in their personal account. Who will be given an opportunity to punish
+                    others in Stage 2?</div>
+                <div>
+                    <input type="radio" id="q1a" name="q1" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1a">Only me</label><br>
+                    <input type="radio" id="q1b" name="q1" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1b">Nobody</label><br>
+                    <input type="radio" id="q1c" name="q1" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1c">All four participants including me</label>
+                </div>
+            </div>
+
+            <div class="question" id="question2">
+                <div>When are you allowed to punish other participants?</div>
+                <div>
+                    <input type="radio" id="q2a" name="q2" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2a">When you have at least 50 MUs in your personal account</label><br>
+                    <input type="radio" id="q2b" name="q2" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2b">When they have contributed at least 15 MUs in Stage 1</label><br>
+                    <input type="radio" id="q2c" name="q2" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2c">When you have contributed at least 15 MUs in Stage 1</label>
+                </div>
+            </div>
+
+            <div class="question" id="question3">
+                <div>Imagine you have 100 MUs in your personal account. What happens to your personal account if you decide to
+                    punish another participant?</div>
+                <div>
+                    <input type="radio" id="q3a" name="q3" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3a">Nothing</label><br>
+                    <input type="radio" id="q3b" name="q3" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3b">You lose 4 MUs</label><br>
+                    <input type="radio" id="q3c" name="q3" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3c">You lose 12 MUs</label>
+                </div>
+            </div>
+
+            <div class="question" id="question4">
+                <div>Imagine you have 100 MUs in your personal account. What happens to your personal account if one participant
+                    decides to punish you, while nobody else punishes you?</div>
+                <div>
+                    <input type="radio" id="q4a" name="q4" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4a">Nothing</label><br>
+                    <input type="radio" id="q4b" name="q4" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4b">You lose 4 MUs</label><br>
+                    <input type="radio" id="q4c" name="q4" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4c">You lose 12 MUs</label>
+                </div>
+            </div>
+
+            <div id="alert" style="margin-bottom: 1rem;"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></div>
+            
+            <div class="buttonDiv">
+                <button id="quiz-instruction-btn" class="form-next" onclick="move(event, -2)" style="margin-right: 0.5rem;">Instructions</button>
+                <button id="quizButton" onclick="checkFormValidity(event, 'quiz-submit', true, {'checked': 4})" class="form-next" disabled>Next</button>
+            </div>
+            <button id="invisibleButton" style="display: none;"></button>
+            
+        </div>
+
+        <!-- 4. Failed Quiz Once -->
+        <div id="tab3" class="tab-content">
+            <p>Unfortunately, you did not answer all questions correctly, but you may try again. If you fail a second time to answer all of the questions correctly, you will not be able to participate in the study. You can review the instructions by clicking on the button at the bottom of the page.</p>
+            <button class="form-next" onclick="move(event, -1)">Next</button>
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}

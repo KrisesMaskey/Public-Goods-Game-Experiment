@@ -1,0 +1,26 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <p>You may proceed to the study as our records indicate that you have not yet participated. You will do an activity
+            with three other participants online in real time. Click on the button below to continue!</p>
+        <button class="form-next">Continue</button>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

@@ -1,0 +1,36 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div class="feedback-summary" style="padding: 25px; border: 0.5px solid #333;">
+            <p style="color: #000;">From your allowance you kept: <span style="color: red;">{{remaining_balance}} MUs</span></p>
+            <p style="color: #000;">From the public fund you got: <span style="color: red;">{{split}} MUs</span></p>
+
+            <div style="margin-top: 2rem;">
+                <p style="color: #000;"><strong>Your total earning from this round: </strong><span style="color: red;">{{ remaining_balance }} + {{ split }} =  {{ current_balance }} MUs</span></p>
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1rem 0;">
+                <span style="margin-bottom: 0.2rem; font-size: 16px; font-weight: bolder;">Next Round</span>
+                <span class="otree-timer__time-left" style="font-size: 25px; color: red;">00:15</span>
+            </div>
+        </div>
+
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

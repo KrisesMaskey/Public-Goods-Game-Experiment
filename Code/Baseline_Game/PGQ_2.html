@@ -1,0 +1,120 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    const r1 = document.getElementById('r1');
+    const r2 = document.getElementById('r2');
+
+    r1.addEventListener('click', (event)=>{
+        r1.classList.add('active'); 
+        checkFormValidity(null, 'post-experiment-questions', false, {'range': 2});
+    });
+
+    r2.addEventListener('click', (event)=>{
+        r2.classList.add('active'); 
+        checkFormValidity(null, 'post-experiment-questions', false, {'range': 2});
+    });
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div class="role-div">
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-orange.png' %}"/>
+                <p>You</p>
+            </div>
+           
+            {% if p2_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p2_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+
+            {% if p3_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p3_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+
+            {% if p4_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p4_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+       </div>
+
+        <form id="survey-form">
+            <div class="question">
+                <div>How many Monetary Units do you think the other <strong>people</strong> in the group contributed to the public fund, on average?</div>
+                <div class="slider-container">
+                    <input id="r1" type="range" min="0" max="20" step="5"  list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <div>How many Monetary Units do you think the <strong>bots</strong> in the group contributed to the public fund, on average?</div>
+                <div class="slider-container">
+                    <input id="r2" type="range" min="0" max="20" step="5"  list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+
+            <p id="note"><i>The slider will only appear when you click on the desired amount.</i></p>
+            <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+
+            <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(null, 'post-experiment-questions', true, {'range': 2})" disabled>Next</button>
+    
+        </form>
+
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

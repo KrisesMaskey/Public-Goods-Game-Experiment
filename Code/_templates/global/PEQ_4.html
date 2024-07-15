@@ -1,0 +1,58 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <form id="survey-form">
+        <div class="question" id="question1">
+            <div>How do you feel towards people (not bots) in this activity? Please answer even if you did not interact with people in the activity.</div>
+            <div>
+                <input type="radio" id="q1a" name="q1" value="very-positively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q1a">Very positively</label><br>
+                <input type="radio" id="q1b" name="q1" value="positively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q1b">Positively</label><br>
+                <input type="radio" id="q1c" name="q1" value="neutral" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q1c">Neutral</label><br>
+                <input type="radio" id="q1d" name="q1" value="negatively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q1d">Negatively</label><br>
+                <input type="radio" id="q1e" name="q1" value="very-negatively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q1e">Very Negatively</label>
+            </div>
+        </div>
+        
+        <div class="question" id="question2">
+            <div>How do you feel towards bots (not people) in this activity? Please answer even if you did not interact with bots in the activity.</div>
+            <div>
+                <input type="radio" id="q2a" name="q2" value="very-positively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q2a">Very positively</label><br>
+                <input type="radio" id="q2b" name="q2" value="positively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q2b">Positively</label><br>
+                <input type="radio" id="q2c" name="q2" value="neutral" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q2c">Neutral</label><br>
+                <input type="radio" id="q2d" name="q2" value="negatively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q2d">Negatively</label><br>
+                <input type="radio" id="q2e" name="q2" value="very-negatively" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 2})"> 
+                <label for="q2e">Very Negatively</label>
+            </div>
+        </div>
+        
+        <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+        <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(event, 'post-experiment-questions', true, {'checked': 2})" disabled>Next</button>
+    </form>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

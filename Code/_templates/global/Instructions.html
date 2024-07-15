@@ -1,0 +1,195 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script>   
+    let index = 0; // Tab Index
+
+    const images = ["{% static 'global/imgs/Baseline/example_1.PNG' %}", "{% static 'global/imgs/Baseline/example_2.PNG' %}", "{% static 'global/imgs/Baseline/example_3.PNG' %}", "{% static 'global/imgs/Baseline/example_4.PNG' %}"];
+    let currentIndex = 0; // Image Viewer Index
+    const imageElement = document.getElementById('image');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const elabel = document.getElementById('example-counter');
+    
+    // Get all the question inputs
+    const questions = document.querySelectorAll('.question input');
+    const quizSubmitBtn = document.getElementById('quizButton');
+    
+    function updateButtons() {
+        prevButton.disabled = currentIndex === 0;
+    }
+
+    function showPrevImage(event) {
+        event.preventDefault();  
+        if (currentIndex > 0) {
+            currentIndex--;
+            elabel.textContent = `Example ${currentIndex + 1}.`;
+            imageElement.src = images[currentIndex];
+            updateButtons();
+        }
+    }
+
+    function showNextImage(event) {
+        event.preventDefault();        
+        if (currentIndex === images.length - 1) {
+            currentIndex = -1
+        }
+        currentIndex++;
+        elabel.textContent = `Example ${currentIndex + 1}.`;
+        imageElement.src = images[currentIndex];
+        updateButtons();
+    }updateButtons(); // Update Image Viewer Buttons
+
+    function enableButton() {
+        const button = document.getElementById('delayedBtn');
+        button.disabled = false;
+        button.classList.add('enabled');
+    }setTimeout(enableButton, 3000); // Set a timeout to enable the button after 30 seconds (30000 milliseconds)
+</script>
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <ul id="navbar" class="navbar">
+            <li><a href="#tab1">Instructions</a></li>
+            <li><a href="#tab2">Example</a></li>
+            <li><a href="#tab3">Quiz</a></li>
+            <li><a href="#tab4">Failed</a></li>
+        </ul>
+
+        <!-- 1. Instructions -->
+        <div id="tab1" class="tab-content active">
+            
+            <p>Now, please read the rules of the activity.</p>
+            <ul>
+                <li>The activity consists of a <strong>maximum of 40 rounds.</strong></li>
+                <li>Each round lasts for a maximum of <strong>30 seconds.</strong></li>
+                <li>The same rules will apply to each round.</li>
+                <li>You will participate with the same group of participants in all the rounds.</li>
+                <li>You may participate <strong>with only bots, only people, or a combination of bots and people.</strong> A bot is a computer program that makes decisions, while a person is another MTurk worker.</li>
+                <li>Before you begin, <strong>you will learn how many bots and how many people are in your group.</strong></li>
+            </ul>
+            
+            <div class="linebreak"></div>
+
+            <p>If there is a bot in your group, it will be represented like this:</p>
+            <div class="image-container">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}" alt="Bot Image">
+            </div>
+            
+            <p>If there is a person in your group, they will be represented like this:</p>
+            <div class="image-container">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}" alt="Human Image">
+            </div>
+            
+            <div class="linebreak"></div>
+
+            <ul>
+                <li>At the beginning of every round, each participant in your group receives <strong>20 Monetary Units</strong> (MUs) as an allowance.</li>
+                <li>Everyone, including you, will independently <strong>decide how many of their 20 MUs to contribute</strong> to a public fund, and <strong>how many MUs to keep</strong> in their personal account.</li>
+                <li>You may contribute some, all, or none of you 20 MUs to the public fund in each round.</li>
+                <li>You have to make your decision in each round within 30 seconds, i.e., <strong>before the timer reaches 0, otherwise, we will not be able to compensate you.</strong></li>
+                <li>After all participants have decided how much to contribute, <strong>the public fund will be multiplied by 1.6, and split equally among all of the participants.</strong></li>
+                <li><strong>The MUs in the public fund will then be multiplied by 1.6, and split equally among all of the participants.</strong></li>
+                <li>Your share will then be added to your personal account.</li>
+            </ul>
+            
+            <div class="linebreak"></div>
+
+            <p>At the end of the final round, participants exchange the MUs in their personal account for real-world money: 20 MUs is worth $0.10. This will be paid as a bonus on top of the show-up fee of $1.50.</p>
+            
+            <button class="form-next" onclick="move(event, 1)">Next</button>
+        </div>
+
+        <!-- 2. Example -->
+        <div id="tab2" class="tab-content">
+            <p><strong>Please, read the following examples carefully. It is important that you fully understand these  examples
+                since you will be asked questions to test your understanding of the rules.</strong></p>
+            
+            <div class="linebreak"></div>
+            <p id="example-counter">Example 1:</p>
+            <div class="image-viewer">
+                <button class="nav-button left" id="prevButton" onclick="showPrevImage(event)">&#9664;</button>
+                <img id="image" src="{% static 'global/imgs/Baseline/example_1.PNG' %}" alt="Image">
+                <button class="nav-button right" id="nextButton" onclick="showNextImage(event)">&#9654;</button>
+            </div>
+            
+            <div class="linebreak"></div>
+            <p><strong style="color: red;">You may proceed to the next page after 30 seconds. Please, take your time to read the examples carefully as a comprehension test will be shown on the next page.</strong></p>
+            <button id="delayedBtn" class="form-next" onclick="move(event, 1)" disabled>Next</button>
+        </div>
+
+        <!-- 3. Quiz -->
+        <div id="tab3" class="tab-content">
+        
+            <p>Please answer the following questions about the rules of the activity. If you fail twice to answer all of them correctly, you will not be able to participate in the study. You can review the instructions by clicking on the button at the bottom of the page.</p>
+            <p>Good luck!</p>
+
+            <div class="question" id="question1">
+                <div>How many monetary units (MUs) will you receive at the start of each round?</div>
+                <div>
+                    <input type="radio" id="q1a" name="q1" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1a">0</label><br>
+                    <input type="radio" id="q1b" name="q1" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1b">20</label><br>
+                    <input type="radio" id="q1c" name="q1" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q1c">30</label>
+                </div>
+            </div>
+
+            <div class="question" id="question2">
+                <div>What happens to the MUs you did not contribute to the public fund?</div>
+                <div>
+                    <input type="radio" id="q2a" name="q2" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2a">They are placed in my personal account</label><br>
+                    <input type="radio" id="q2b" name="q2" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2b">They are split equally among the other participants</label><br>
+                    <input type="radio" id="q2c" name="q2" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q2c">They are multiplied by 1.6 and placed in my personal account</label>
+                </div>
+            </div>
+
+            <div class="question" id="question3">
+                <div>What happens to the amount of MUs that the participants contributed to the public fund?</div>
+                <div>
+                    <input type="radio" id="q3a" name="q3" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3a">It gets multiplied by 1.6 then divided equally between all players</label><br>
+                    <input type="radio" id="q3b" name="q3" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3b">It gets divided based on the contributions of the participant (those who contributed more receive more)</label><br>
+                    <input type="radio" id="q3c" name="q3" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q3c">It gets multiplied by 1.6 then divided based on the contributions of the participants (those who contributed more receive more)</label>
+                </div>
+            </div>
+
+            <div class="question" id="question4">
+                <div>What type of participants could you be interacting with in your group?</div>
+                <div>
+                    <input type="radio" id="q4a" name="q4" value="a1" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4a">Only bots</label><br>
+                    <input type="radio" id="q4b" name="q4" value="a2" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4b">Each of them could be a bot or a person</label><br>
+                    <input type="radio" id="q4c" name="q4" value="a3" onchange="checkFormValidity(null, 'quiz-submit', false, {'checked': 4})"> <label for="q4c">The instructions do not provide information to answer this question</label>
+                </div>
+            </div>
+
+            <div id="alert" style="margin-bottom: 1rem;"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></div>
+            
+            <div class="buttonDiv">
+                <button id="quiz-instruction-btn" class="form-next" onclick="move(event, -2)" style="margin-right: 0.5rem;">Instructions</button>
+                <button id="quizButton" onclick="checkFormValidity(event, 'quiz-submit', true, {'checked': 4})" class="form-next" disabled>Next</button>
+            </div>
+            <button id="invisibleButton" style="display: none;"></button>
+            
+        </div>
+
+        <!-- 4. Failed Quiz Once -->
+        <div id="tab3" class="tab-content">
+            <p>Unfortunately, you did not answer all questions correctly, but you may try again. If you fail a second time to answer all of the questions correctly, you will not be able to participate in the study. You can review the instructions by clicking on the button at the bottom of the page.</p>
+            <button class="form-next" onclick="move(event, -1)">Next</button>
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}

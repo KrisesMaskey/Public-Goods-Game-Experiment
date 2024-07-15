@@ -1,0 +1,73 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <form id="survey-form">
+        <div class="question" id="education-level">
+            <div>What is the highest level of education you have completed?</div>
+            <div>
+                <input type="radio" id="less-than-high-school" name="education" value="less-than-high-school" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="less-than-high-school">Less than high school</label><br>
+                <input type="radio" id="high-school" name="education" value="high-school" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="high-school">High school or equivalent (e.g., GED)</label><br>
+                <input type="radio" id="some-college" name="education" value="some-college" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="some-college">Some college</label><br>
+                <input type="radio" id="associate" name="education" value="associate" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="associate">2-year degree (Associate's)</label><br>
+                <input type="radio" id="bachelor" name="education" value="bachelor" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="bachelor">4-year degree (Bachelor's)</label><br>
+                <input type="radio" id="graduate" name="education" value="graduate" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})"> 
+                <label for="graduate">Graduate or professional degree</label>
+            </div>
+        </div>
+
+        <div class="question" id="family-income">
+            <div>What was your total family income from all sources in 2019, before taxes?</div>
+            <div>
+                <select name="income" id="income" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})">
+                    <option value="">Select income range</option>
+                    <option value="less-than-10000">Less than $10,000</option>
+                    <option value="10000-19999">$10,000-$19,999</option>
+                    <option value="20000-29999">$20,000-$29,999</option>
+                    <option value="30000-39999">$30,000-$39,999</option>
+                    <option value="40000-49999">$40,000-$49,999</option>
+                    <option value="50000-59999">$50,000-$59,999</option>
+                    <option value="60000-69999">$60,000-$69,999</option>
+                    <option value="70000-79999">$70,000-$79,999</option>
+                    <option value="80000-89999">$80,000-$89,999</option>
+                    <option value="90000-99999">$90,000-$99,999</option>
+                    <option value="100000-149999">$100,000-$149,999</option>
+                    <option value="150000-more">$150,000 or more</option>
+                    <option value="prefer-not-to-report">I do not wish to report my income</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="question" id="zip-code">
+            <div>Please, tell us your 5-digit zip-code! This information will only be used for statistical purposes.</div>
+            <div>
+                <input type="text" id="zip" name="zip" placeholder="zip code" maxlength="5" onchange="checkFormValidity(null, 'post-experiment-questions', false, {'checked': 1, 'select': 1, 'text': 1})">
+            </div>
+        </div>
+
+        <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+        <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(event, 'post-experiment-questions', true, {'checked': 1, 'select': 1, 'text': 1})" disabled>Next</button>
+    </form>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

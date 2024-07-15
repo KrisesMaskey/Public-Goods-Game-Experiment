@@ -1,0 +1,28 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <p>Thank you for participating in the activity! You completed the activity with a total of {{ balance }} MUs in your personal account. If you finish answering a few follow
+        up questions, you will earn {{ balance }}/20*0.10 = ${{ bonus }} as a bonus.</p>
+        <p>Click "Continue" to answer a few questions about yourself and the activity!</p>
+
+        <button class="form-next">Continue</button>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

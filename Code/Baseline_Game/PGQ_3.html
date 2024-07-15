@@ -1,0 +1,262 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+        slider.addEventListener('click', event => {
+            slider.classList.add('active');
+            checkFormValidity(null, 'post-experiment-questions', false, {'range': 11});
+        });
+    });
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div class="role-div">
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-orange.png' %}"/>
+                <p>You</p>
+            </div>
+           
+            {% if p2_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p2_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+
+            {% if p3_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p3_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+
+            {% if p4_role == 'human' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                <p>Person</p>
+            </div>
+            {% elif p4_role == 'bot' %}
+            <div class="role">
+                <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                <p>Bot</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <p id="note"><i>The slider will only appear when you click on the desired amount.</i></p>
+        <p id="note"><i>Please, answer all the questions, and the "Next" button will be enabled.</i></p>
+
+        <p>How many Monetary Units would you contribute to the public fund <strong>if the other members in your group contributed the following amounts</strong>, on average? We calculate the average from the amount they actually contributed in the single round they have just participated in and round it to the amounts displayed below.</p>
+        <p>The answer you gave will be used to calculate your earnings in this round based on what the others have contributed on average. <strong>Remember that 20 MUs is worth $0.10, and the amount you earn in this round will be paid to you as a bonus on the MTurk platform.</strong> We will tell you how much you earned at the end of the study.</p>
+        <div class="linebreak"></div>
+
+        <form id="survey-form">
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">0 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r1" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">2 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r2" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">4 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r3" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">6 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r4" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">8 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r5" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">10 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r6" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">12 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r7" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">14 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r8" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">16 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r9" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">18 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r10" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="question" style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="min-width: 200px;">20 Monetary Units</div>
+                <div class="slider-container" style="width: 50%; margin: 0;">
+                    <input id="r11" type="range" min="0" max="20" step="5" list="steplist">
+                    <div class="tickerDiv">
+                        <datalist id="steplist">
+                            <option value="0" label="0"></option>
+                            <option value="5" label="5"></option>
+                            <option value="10" label="10"></option>
+                            <option value="15" label="15"></option>
+                            <option value="20" label="20"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+
+            <button class="form-next" type="submit" id="next-button" onclick="checkFormValidity(null, 'post-experiment-questions', true, {'range': 11})" disabled>Next</button>
+    
+        </form>
+
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

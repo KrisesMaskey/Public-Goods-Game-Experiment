@@ -1,0 +1,22 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <p>Thank you for your interest in our study. Unfortunately, you have failed twice to answer all the comprehension questions correctly. Consequently, you are no longer eligible to complete the study. As a token of our appreciation, we would like to compensate you $0.20 for the time you have spent so far on the study. We will send a compensation HIT in the amount of $0.20. Please, return the HIT so that other MTurk workers may take it.</p>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}

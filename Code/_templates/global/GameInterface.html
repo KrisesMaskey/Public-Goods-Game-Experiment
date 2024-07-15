@@ -1,0 +1,151 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+     document.querySelectorAll('input[type="range"]').forEach(slider => {
+        slider.addEventListener('click', event => {
+            slider.classList.add('active');
+            checkFormValidity(null, 'game-interface', false, {'range': 1});
+        });
+    });
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="div-container">
+        <div class="game-interface">
+            <div class="left-column">
+                <div class="progress-bar-div">
+                    <span>Stage 1</span>
+                    <div class="barDiv">
+                        <div class="p-bar"></div>
+                        <div class="p-bar"></div>
+                        <div class="p-bar"></div>
+                        <div class="p-bar"></div>
+                    </div>
+                </div>
+                <div class="contribution-div">
+                    <form id="survey-form">
+                        <div class="question" style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 1rem;">
+                            <div>How many Monetary Units (MUs) will you contribute in this round?</div>
+                            <div class="slider-container" style="width: 90%; margin: 2rem 1rem 1rem 1rem;">
+                                <input id="r1" type="range" min="0" max="20" step="5" list="steplist" style="width: 100%;">
+                                <div class="tickerDiv" style="width: 100%;">
+                                    <datalist id="steplist">
+                                        <option value="0" label="0"></option>
+                                        <option value="5" label="5"></option>
+                                        <option value="10" label="10"></option>
+                                        <option value="15" label="15"></option>
+                                        <option value="20" label="20"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button style="display: block; width: 200px; margin: auto;" class="form-next" type="submit" id="next-button" onclick="checkFormValidity(null, 'game-interface', true, {'range': 1})" disabled>Submit</button>
+                    </form>
+
+                    <div class="linebreak"></div>
+                    <span style="padding: 5px 0 0 5px;">Please remember to submit before the timer finishes!</span>
+                    <span style="padding-left: 5px;">The slider will only appear when you click on the desired amount to contribute.</span>
+                </div>
+                <div class="balance-div">
+                    <span id="personal-account">Personal Account</span>
+                    <span>{{ balance }}</span>
+                    <span>MUs</span>
+
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="role-div" style="margin: 0.5rem 4rem 0 4rem;">
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/human-orange.png' %}"/>
+                        <span class="letter-label">A</span>
+                        <span style="font-size: 20px; color: #000;">You</span>
+                    </div>
+                    
+                    {% if p2_role == 'human' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                        <span class="letter-label">B</span>
+                        <span style="font-size: 20px; color: #000;">Person</span>
+                    </div>
+                    {% elif p2_role == 'bot' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                        <span class="letter-label" style="top:40%;">B</span>
+                        <span style="font-size: 20px; color: #000;">Bot</span>
+                    </div>
+                    {% endif %}
+        
+                    {% if p3_role == 'human' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                        <span class="letter-label">C</span>
+                        <span style="font-size: 20px; color: #000;">Person</span>
+                    </div>
+                    {% elif p3_role == 'bot' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                        <span class="letter-label" style="top:40%;">C</span>
+                        <span style="font-size: 20px; color: #000;">Bot</span>
+                    </div>
+                    {% endif %}
+        
+                    {% if p4_role == 'human' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/human-bw.png' %}"/>
+                        <span class="letter-label">D</span>
+                        <span style="font-size: 20px; color: #000;">Person</span>
+                    </div>
+                    {% elif p4_role == 'bot' %}
+                    <div class="role">
+                        <img src="{% static 'global/imgs/Baseline/bot-bw.png' %}"/>
+                        <span class="letter-label" style="top:40%;">D</span>
+                        <span style="font-size: 20px; color: #000;">Bot</span>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="arrows">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 108">
+                        <defs>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="green"/>
+                            </marker>
+                        </defs>
+                        <path d="M 74,0 C 70,80 150,10 210,90" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                        <path d="M 195,0 C 200,60 230,10 240,87" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                        <path d="M 310,0 C 310,60 280,10 265,87" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                        <path d="M 430,0 C 430,80 350,10 290,90" stroke="green" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+                    </svg>
+                </div>
+
+                <div class="jar-div">
+                    <img src="{% static 'global/imgs/Baseline/jar.PNG' %}"/>
+                    <div class="timer">
+                        <span style="margin-bottom: 0.2rem; font-size: 16px;">Time Remaining</span style="margin-bottom: 0.3rem;">
+                        <span  class="otree-timer__time-left" style="font-size: 25px; color: red;">00:30</span>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <p>&copy; 2024 Krises Maskey</p>
+    </div>
+
+{{ endblock }}
+

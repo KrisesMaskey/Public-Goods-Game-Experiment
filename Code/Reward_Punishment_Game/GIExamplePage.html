@@ -1,0 +1,77 @@
+{% load otree static %}
+
+{{ block title }} 
+{{ endblock }}
+
+{{ block script }}
+<script src="{% static 'global/js/utils.js' %}"></script>
+<script>
+    const images = ["{% static 'global/imgs/Reward/example_interface_1.PNG' %}", "{% static 'global/imgs/Reward/example_interface_2.PNG' %}", "{% static 'global/imgs/Both/example_interface_1.PNG' %}", "{% static 'global/imgs/Both/example_interface_2.PNG' %}", "{% static 'global/imgs/Both/example_interface_3.PNG' %}"];   
+    const labels = [ "Sample interface for Stage 1:", "Sample interface for Stage 1 feedback:", "Sample interface for Stage 2:","If you have less than 50 MUs in your personal account, you are not able to take any action during Stage 2:", "Sample interface for result:"]
+    let currentIndex = 0; // Image Viewer Index
+    const imageElement = document.getElementById('image');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+    const elabel = document.getElementById('interface-description');
+    
+    function updateButtons() {
+        prevButton.disabled = currentIndex === 0;
+    }
+
+    function showPrevImage(event) {
+        event.preventDefault();  
+        if (currentIndex > 0) {
+            currentIndex--;
+            elabel.textContent = labels[currentIndex]
+            imageElement.src = images[currentIndex];
+            updateButtons();
+        }
+    }
+
+    function showNextImage(event) {
+        event.preventDefault();        
+        if (currentIndex === images.length - 1) {
+            currentIndex = -1
+        }
+        currentIndex++;
+        elabel.textContent = labels[currentIndex]
+        imageElement.src = images[currentIndex];
+        updateButtons();
+    }updateButtons(); // Update Image Viewer Buttons
+
+    function sendMessage(){
+        liveSend({'type': 'alive'});
+    }
+
+    setInterval(sendMessage, js_vars.delay);
+</script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" type="text/css" href="{% static 'global/css/styles.css' %}"/>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="div-container">
+    <p><strong>Please, familiarize yourself with the interface where you will make your decisions in
+        the activity. Note that this is an example, and participants in your group may be people or bots.</strong></p>
+    
+    <p id="interface-description">Sample interface for Stage 1:</p>
+    <div class="linebreak"></div>
+    <div class="image-viewer">
+        <button class="nav-button left" id="prevButton" onclick="showPrevImage(event)">&#9664;</button>
+        <img id="image" src="{% static 'global/imgs/Reward/example_interface_1.PNG' %}" alt="Image">
+        <button class="nav-button right" id="nextButton" onclick="showNextImage(event)">&#9654;</button>
+    </div>
+    
+    <p>You will proceed with the activity in <span class="otree-timer__time-left">01:15</span>.</p>
+
+    <button id="invisibleButton" style="display: none;"></button>
+</div>
+<div id="footer">
+    <p>&copy; 2024 Krises Maskey</p>
+</div>
+
+{{ endblock }}
+
